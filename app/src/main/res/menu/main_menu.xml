@@ -4,7 +4,7 @@
     <item
         android:id="@+id/action_add"
         app:showAsAction="ifRoom"
-        android:title="Add">
+        android:title="Subtitle">
     </item>
     <item
         android:id="@+id/action_settings"
