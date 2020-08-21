@@ -15,7 +15,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageView;
+import android.widget.PopupMenu;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -99,6 +101,14 @@ public class MainActivity extends AppCompatActivity {
         MediaSource  mediaSource= new ExtractorMediaSource(videoUrl,factory,extractorsFactory,null,null);
 
 
+        Format textFormat = Format.createTextSampleFormat(null, MimeTypes.APPLICATION_SUBRIP,
+                null, Format.NO_VALUE, Format.NO_VALUE, "en", null, Format.OFFSET_SAMPLE_RELATIVE);
+        MediaSource textMediaSource = new SingleSampleMediaSource.Factory(factory)
+                .createMediaSource(subtitleUri, textFormat, C.TIME_UNSET);
+        mediaSource = new MergingMediaSource(mediaSource, textMediaSource);
+
+
+
         playerView.setPlayer(simpleExoPlayer);
         playerView.setKeepScreenOn(true);
         simpleExoPlayer.prepare(mediaSource);
@@ -146,32 +156,32 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-//        btQuality.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//
-//                PopupMenu popup= new PopupMenu(MainActivity.this,view);
-//
-//                popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-//                    @Override
-//                    public boolean onMenuItemClick(MenuItem menuItem) {
-//
-//                        Toast.makeText(getApplicationContext(),"Clicked",Toast.LENGTH_LONG).show();
-//
-//                        return false;
-//                    }
-//                });
-//
-//
-//                Menu menu= popup.getMenu();
-//                menu.add(Menu.NONE,0,0,"Video quality");
-//                popup.show();
-//
-//
-//
-//
-//            }
-//        });
+        btQuality.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                PopupMenu popup= new PopupMenu(MainActivity.this,view);
+
+                popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                    @Override
+                    public boolean onMenuItemClick(MenuItem menuItem) {
+
+                        Toast.makeText(getApplicationContext(),"Clicked",Toast.LENGTH_LONG).show();
+
+                        return false;
+                    }
+                });
+
+
+                Menu menu= popup.getMenu();
+                menu.add(Menu.NONE,0,0,"Video quality");
+                popup.show();
+
+
+
+
+            }
+        });
 
 
 
